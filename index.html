@@ -697,7 +697,7 @@ function csSetTheme(name, persist) {
 //  APP LOGIC
 // ══════════════════════════════════════════
 
-// Group order inside each puzzle = difficulty: level 0 (easiest, Star Wars trivia) to level 3 (hardest)
+// Group order inside each puzzle = difficulty: level 0 (easiest) to level 3 (hardest)
 const TABS = [
   { key: 'u1', label: 'Unit 1', title: 'Unit 1 · Introduction to Security', topics: 'Topics 1.1–1.5' },
   { key: 'u2', label: 'Unit 2', title: 'Unit 2 · Securing Spaces', topics: 'Topics 2.1–2.4' },
@@ -707,62 +707,98 @@ const TABS = [
 const PUZZLES = {
   u1: [
     { title: 'Puzzle 1', groups: [
-      { name: 'Jedi', terms: ['Yoda', 'Obi-Wan', 'Luke', 'Mace Windu'], why: 'Star Wars warm-up: all four are Jedi.' },
+      { name: 'Ways scammers reach you', terms: ['Email', 'Text message', 'Social media DM', 'Phone call'], why: 'Social engineering is often delivered by email, text, or social media message, and it can also happen by voice or in person.' },
       { name: 'Social engineering tactics', terms: ['Urgency', 'Intimidation', 'Elicitation', 'Phishing'], why: 'Each one manipulates a person into acting: rush them, scare them, coax info out of them, or trick them with a fake message.' },
-      { name: 'Ways to strengthen logins', terms: ['Passphrase', 'Password manager', 'MFA', 'One-time code'], why: 'Long unique passwords plus a second proof of identity make authentication stronger. (A one-time code is the extra proof MFA asks for.)' },
+      { name: 'Ways to strengthen logins', terms: ['Passphrase', 'Password manager', 'MFA', 'One-time code'], why: 'Long, unique passwords plus a second proof of identity make authentication stronger. A one-time code is the extra proof MFA asks for.' },
       { name: 'Wireless attacks', terms: ['Evil twin', 'Jamming', 'War driving', 'Rogue AP'], why: 'Each attack targets Wi-Fi: a fake lookalike network, blocking the signal, hunting for networks, or a hidden access point.' }
     ] },
     { title: 'Puzzle 2', groups: [
-      { name: 'Droids', terms: ['R2-D2', 'C-3PO', 'BB-8', 'K-2SO'], why: 'Star Wars trivia: all four are droids.' },
+      { name: 'Info victims give away', terms: ['Phone number', 'Address', 'Workplace', 'One-time password'], why: 'Victims of social engineering may hand over personal details or a login code, which lets an adversary impersonate them or log in as them.' },
       { name: 'Personal info used in passwords', terms: ['Pet name', 'Birthday', 'Anniversary', 'Family name'], why: 'Adversaries build guess lists from personal details people love to put in passwords. Avoid them.' },
       { name: 'Signs of a password attack', terms: ['Failed logins', 'Odd hours', 'Unknown device', 'Account lockout'], why: 'Many failed attempts, logins at unusual times, and unfamiliar devices all point to someone guessing passwords.' },
       { name: 'Adversary motivations', terms: ['Greed', 'Recognition', 'Revenge', 'Beliefs'], why: 'Adversaries attack for money, fame, payback, or a cause they believe in.' }
     ] },
     { title: 'Puzzle 3', groups: [
-      { name: 'Planets', terms: ['Tatooine', 'Hoth', 'Endor', 'Naboo'], why: 'Star Wars trivia: all four are planets (or moons) from the films.' },
+      { name: 'Public Wi-Fi protections', terms: ['VPN', 'HTTPS', 'Auto-join off', 'Forget network'], why: 'Encrypt your traffic and stop your device from quietly connecting to lookalike networks.' },
       { name: 'AI-powered attacks', terms: ['Deepfake', 'Voice clone', 'AI phishing', 'Fake profile'], why: 'Adversaries use AI tools to make scams more believable: fake video, fake voices, polished messages, and invented people.' },
       { name: 'AI used for defense', terms: ['Threat detection', 'Code review', 'Log analysis', 'Auto response'], why: 'Defenders use AI to spot threats faster, review code for flaws, scan logs, and respond quickly.' },
-      { name: 'Public Wi-Fi protections', terms: ['VPN', 'HTTPS', 'Auto-join off', 'Forget network'], why: 'Encrypt your traffic and stop your device from quietly connecting to lookalike networks.' }
+      { name: 'High-skilled adversaries can', terms: ['Create new tools', 'Modify tools', 'Find zero days', 'Evade defenses'], why: 'High-skilled adversaries build or adapt their own tools and discover undocumented vulnerabilities, unlike low-skilled ones who buy tools that exploit known flaws.' }
+    ] },
+    { title: 'Puzzle 4', groups: [
+      { name: 'What a bad link can do', terms: ['Malware installed', 'Browser data stolen', 'Fake login page', 'Redirected website'], why: 'Clicking a malicious link or file can install malware, steal information from your browser, or send you to a page built to capture your login.' },
+      { name: 'Strong password rules', terms: ['Long', 'Random', 'Unique', 'No names or dates'], why: 'Good passwords are long, random, and unique, and they avoid names, dates, and other personal details.' },
+      { name: 'Online password attack methods', terms: ['Common passwords', 'Common patterns', 'Stolen passwords', 'Dictionary attack'], why: 'Adversaries try likely passwords, predictable patterns, leaked passwords, or a list built from personal information.' },
+      { name: 'Adversary skill terms', terms: ['Low-skilled', 'High-skilled', 'Zero day', 'Purchased tools'], why: 'Adversaries are classified by skill. Low-skilled ones rely on purchased tools; high-skilled ones can discover zero days.' }
+    ] },
+    { title: 'Puzzle 5', groups: [
+      { name: 'Wi-Fi network parts', terms: ['SSID', 'Access point', 'Beacon', 'Hotspot'], why: 'These are the pieces of a wireless network: the access point broadcasts a beacon with the network name (SSID) so devices can find it.' },
+      { name: 'Urgency tricks', terms: ['Deadline', 'Countdown timer', 'Act now', 'Limited time'], why: 'Urgency pushes you to react before you think, which is exactly what a social engineer wants.' },
+      { name: 'Signs of phishing', terms: ['Misspelled domain', 'Generic greeting', 'Mismatched link', 'Unexpected attachment'], why: 'Check the sender and the link before you click. These are common indicators of a phishing message.' },
+      { name: 'Defending against AI scams', terms: ['Verify caller', 'Call back', 'Safe word', 'Slow down'], why: 'Confirm identity a second way and refuse to be rushed. These habits defeat voice clones and deepfake calls.' }
     ] }
   ],
   u2: [
     { title: 'Puzzle 1', groups: [
-      { name: 'Sith Lords', terms: ['Vader', 'Maul', 'Dooku', 'Sidious'], why: 'Star Wars trivia: all four are Sith.' },
-      { name: 'Social engineering tactics', terms: ['Pretexting', 'Authority', 'Scarcity', 'Familiarity'], why: 'A believable story, pretending to be the boss, "only a few left," and "I know your friend" are all ways to build trust or pressure.' },
       { name: 'Types of adversaries', terms: ['Script kiddie', 'Hacktivist', 'Nation-state', 'Insider'], why: 'Different attackers, different skills and motives: borrowed tools, a cause, a government, or someone on the inside.' },
-      { name: 'Risk vocabulary', terms: ['Threat', 'Vulnerability', 'Asset', 'Likelihood'], why: 'Risk assessment weighs what you must protect, what could go wrong, the weakness, and how probable an attack is.' }
+      { name: 'Social engineering tactics', terms: ['Pretexting', 'Authority', 'Scarcity', 'Familiarity'], why: 'A believable story, pretending to be the boss, "only a few left," and "I know your friend" are all ways to build trust or pressure.' },
+      { name: 'Risk vocabulary', terms: ['Threat', 'Vulnerability', 'Asset', 'Likelihood'], why: 'Risk assessment weighs what you must protect, what could go wrong, the weakness, and how probable an attack is.' },
+      { name: 'Ways physical attacks hurt assets', terms: ['Loss', 'Damage', 'Disruption', 'Destruction'], why: 'Threats that exploit physical vulnerabilities can cause loss, damage, disruption, or destruction of assets.' }
     ] },
     { title: 'Puzzle 2', groups: [
-      { name: 'Bounty hunters', terms: ['Boba Fett', 'Jango Fett', 'Greedo', 'Bossk'], why: 'Star Wars trivia: all four are bounty hunters.' },
+      { name: 'Physical attacks', terms: ['Tailgating', 'Dumpster diving', 'Shoulder surfing', 'Badge cloning'], why: 'Each gets an adversary access or information in person: following someone in, digging in trash, watching a screen, or copying an ID.' },
       { name: 'Ways to manage risk', terms: ['Avoid', 'Mitigate', 'Transfer', 'Accept'], why: 'Stop the activity, reduce the risk, hand it to someone else (like insurance), or live with it.' },
       { name: 'Types of security controls', terms: ['Preventive', 'Detective', 'Corrective', 'Deterrent'], why: 'Controls stop, spot, fix, or discourage an attack.' },
-      { name: 'Physical attacks', terms: ['Tailgating', 'Dumpster diving', 'Shoulder surfing', 'Badge cloning'], why: 'Each one gets an adversary access or information in person: following someone in, digging in trash, watching a screen, or copying an ID.' }
+      { name: 'Control categories', terms: ['Managerial', 'Technical', 'Physical', 'Operational'], why: 'Controls are also grouped by what they are: rules and oversight, technology, tangible barriers, or day-to-day procedures.' }
     ] },
     { title: 'Puzzle 3', groups: [
-      { name: 'Rebels and heroes', terms: ['Han Solo', 'Leia', 'Chewbacca', 'Lando'], why: 'Star Wars trivia: all four fought against the Empire.' },
       { name: 'Physical security controls', terms: ['Mantrap', 'Bollard', 'Fence', 'Badge reader'], why: 'These physical barriers and gates keep people and vehicles out of a space.' },
       { name: 'Ways to detect physical attacks', terms: ['CCTV', 'Motion sensor', 'Alarm', 'Access log'], why: 'Detection tools notice an intruder or record who came and went.' },
-      { name: 'Managerial controls', terms: ['Policy', 'Training', 'Visitor log', 'Background check'], why: 'Managerial controls are rules and people processes, not hardware. (A visitor log is a procedure that visitors must follow.)' }
+      { name: 'Managerial controls', terms: ['Policy', 'Training', 'Visitor log', 'Background check'], why: 'Managerial controls are rules and people processes, not hardware. A visitor log is a procedure visitors must follow.' },
+      { name: 'More social engineering tactics', terms: ['Consensus', 'Urgency', 'Intimidation', 'Authority'], why: 'Everyone else is doing it, you must hurry, or something bad will happen. Each applies social pressure.' }
+    ] },
+    { title: 'Puzzle 4', groups: [
+      { name: 'Assets to protect', terms: ['Laptop', 'Server', 'Customer data', 'Building'], why: 'An asset is anything of value to an organization that needs protection.' },
+      { name: 'Physical vulnerabilities', terms: ['Propped door', 'Unlocked room', 'Broken camera', 'Unshredded papers'], why: 'A vulnerability is a weakness a threat can exploit. Each of these is an easy opening in a physical space.' },
+      { name: 'Good camera placement spots', terms: ['Entrances', 'Exits', 'Server room', 'Parking lot'], why: 'Place monitoring where an attack is likely to pass or where critical assets are kept.' },
+      { name: 'Risk assessment steps', terms: ['Identify assets', 'Spot vulnerabilities', 'Estimate likelihood', 'Document risk'], why: 'Assessing risk means finding what matters, finding weaknesses, judging how likely an attack is, and writing it down.' }
+    ] },
+    { title: 'Puzzle 5', groups: [
+      { name: 'Visitor management', terms: ['Sign-in sheet', 'Visitor badge', 'Escort', 'ID check'], why: 'Visitor controls make sure outsiders are identified, tracked, and supervised.' },
+      { name: 'Risk responses in action', terms: ['Buy insurance', 'Add a lock', 'Cancel the plan', 'Live with it'], why: 'These match the four risk strategies: transfer, mitigate, avoid, and accept.' },
+      { name: 'Results of physical attacks', terms: ['Stolen equipment', 'Damaged hardware', 'Service outage', 'Destroyed data'], why: 'Physical attacks can cause loss, damage, disruption, or destruction. These are everyday examples of each.' },
+      { name: 'Social engineering lines', terms: ['Everyone\'s done it', 'Only two left', 'Boss says so', 'Friend of a friend'], why: 'These lines map to consensus, scarcity, authority, and familiarity.' }
     ] }
   ],
   u3: [
     { title: 'Puzzle 1', groups: [
-      { name: 'Species', terms: ['Wookiee', 'Ewok', 'Hutt', 'Jawa'], why: 'Star Wars trivia: all four are species.' },
+      { name: 'Wi-Fi security settings', terms: ['WPA2', 'WPA3', 'Guest network', 'MAC filtering'], why: 'Wireless protection comes from strong encryption and settings that limit who joins. Here MAC filtering is a defense, not the MAC attack.' },
       { name: 'Network attacks', terms: ['ARP poisoning', 'MAC flooding', 'MAC spoofing', 'Eavesdropping'], why: 'Each lets an adversary redirect, collect, or fake traffic on a network.' },
-      { name: 'Wi-Fi security settings', terms: ['WPA2', 'WPA3', 'Guest network', 'MAC filtering'], why: 'Wireless protection comes from strong encryption and settings that limit who joins. (MAC filtering here is a defense, not the MAC attack.)' },
-      { name: 'Router and switch policy items', terms: ['Port security', 'Disable Telnet', 'Auth server', 'Require firewall'], why: 'A security policy sets minimum standards: lock down ports, turn off weak services, use central logins, and require a firewall.' }
+      { name: 'Router and switch policy items', terms: ['Port security', 'Disable Telnet', 'Auth server', 'Require firewall'], why: 'A security policy sets minimum standards: lock down ports, turn off weak services, use central logins, and require a firewall.' },
+      { name: 'Impacts of network vulnerabilities', terms: ['Intercept data', 'Alter data', 'Lateral movement', 'Denial of service'], why: 'Network weaknesses can let adversaries steal, change, move through, or knock out systems.' }
     ] },
     { title: 'Puzzle 2', groups: [
-      { name: 'More planets', terms: ['Dagobah', 'Coruscant', 'Alderaan', 'Kashyyyk'], why: 'Star Wars trivia: all four are planets.' },
-      { name: 'Impacts of network vulnerabilities', terms: ['Intercept data', 'Alter data', 'Lateral movement', 'Denial of service'], why: 'Network weaknesses can let adversaries steal, change, move through, or knock out systems.' },
-      { name: 'Ways onto a network', terms: ['Open port', 'Rogue AP', 'Beacon frame', 'No authentication'], why: 'Unused ports, hidden access points, and signals broadcast outside the building give adversaries an entry point.' },
-      { name: 'Capturing traffic', terms: ['Sniffing', 'Eavesdropping', 'On-path', 'Man-in-the-middle'], why: 'All four describe grabbing data in transit. On-path and man-in-the-middle are the same attack; sniffing and eavesdropping are the passive version.' }
+      { name: 'Capturing traffic', terms: ['Sniffing', 'Eavesdropping', 'On-path', 'Man-in-the-middle'], why: 'All four describe grabbing data in transit. On-path and man-in-the-middle are the same attack; sniffing and eavesdropping are the passive version.' },
+      { name: 'Ways onto a network', terms: ['Open port', 'Rogue AP', 'Beacon frame', 'No authentication'], why: 'Unused ports, hidden access points, signals broadcast outside the building, and networks that never check who joins all give adversaries an entry point.' },
+      { name: 'Managerial controls', terms: ['Router policy', 'Switch policy', 'VPN policy', 'Config standard'], why: 'These written rules set the minimum security for network equipment and remote access.' },
+      { name: 'Wi-Fi encryption standards', terms: ['WEP', 'WPA', 'WPA2', 'WPA3'], why: 'Newer standards fix weaknesses in older ones. WPA3 is the current best choice.' }
     ] },
     { title: 'Puzzle 3', groups: [
-      { name: 'Starships', terms: ['Millennium Falcon', 'X-wing', 'TIE Fighter', 'Star Destroyer'], why: 'Star Wars trivia: all four are ships.' },
-      { name: 'Managerial controls', terms: ['Router policy', 'Switch policy', 'VPN policy', 'Config standard'], why: 'These written rules set the minimum security for network equipment and remote access.' },
-      { name: 'Wi-Fi encryption standards', terms: ['WEP', 'WPA', 'WPA2', 'WPA3'], why: 'Newer standards fix weaknesses in older ones; WPA3 is the current best choice.' },
-      { name: 'LAN-level attacks', terms: ['MAC flooding', 'MAC spoofing', 'ARP poisoning', 'Rogue AP'], why: 'Plugging into a switch port or open wall jack lets an adversary start attacks from inside the network.' }
+      { name: 'Wi-Fi encryption standards', terms: ['WEP', 'WPA', 'WPA2', 'WPA3'], why: 'From oldest to newest. Weak or outdated encryption makes a wireless network easy to attack.' },
+      { name: 'LAN-level attacks', terms: ['MAC flooding', 'MAC spoofing', 'ARP poisoning', 'Rogue AP'], why: 'Plugging into a switch port or open wall jack lets an adversary start attacks from inside the network.' },
+      { name: 'Vulnerability scanner output', terms: ['Detected issues', 'Severity', 'Mitigation advice', 'Scan report'], why: 'Automated scanners produce a report listing detected vulnerabilities, how severe they are, and how to fix them.' },
+      { name: 'Switch policy items', terms: ['Ban local accounts', 'Require port security', 'Use MAC filtering', 'Approved auth server'], why: 'A switch security policy sets minimum standards for how switches on the network are configured.' }
+    ] },
+    { title: 'Puzzle 4', groups: [
+      { name: 'Wi-Fi network parts', terms: ['SSID', 'Access point', 'Router', 'Beacon'], why: 'The access point broadcasts a beacon with the network name (SSID) so devices can find the network.' },
+      { name: 'Router policy items', terms: ['Ban local accounts', 'Disable Telnet', 'Require firewall', 'Approved login server'], why: 'A router security policy sets a minimum configuration standard: central logins, no weak services, and a firewall.' },
+      { name: 'Wireless attack steps', terms: ['Pick up beacons', 'Break encryption', 'Join the network', 'Jam the signal'], why: 'Adversaries can gather network info from signals, attack weak encryption, join networks that do not authenticate, or block service.' },
+      { name: 'High-risk results', terms: ['Capture traffic', 'Spoof a device', 'Launch a DoS', 'Move laterally'], why: 'High risks let an adversary easily cause significant impact, such as capturing traffic, spoofing a device, or launching a DoS attack.' }
+    ] },
+    { title: 'Puzzle 5', groups: [
+      { name: 'Network devices', terms: ['Router', 'Switch', 'Firewall', 'Access point'], why: 'These devices carry, direct, filter, or provide wireless access to network traffic.' },
+      { name: 'Faking something', terms: ['MAC spoofing', 'ARP poisoning', 'Evil twin', 'Rogue AP'], why: 'Each attack pretends to be something it is not: a trusted device address, a gateway entry, a known network, or a legitimate access point.' },
+      { name: 'Wireless settings to configure', terms: ['SSID name', 'Encryption type', 'Passphrase', 'Guest network'], why: 'Securing a wireless network starts with choosing these settings carefully.' },
+      { name: 'ARP poisoning ingredients', terms: ['IP address', 'MAC address', 'ARP table', 'Default gateway'], why: 'The gateway keeps a table pairing IP and MAC addresses. ARP poisoning falsifies it so the adversary receives the target\'s traffic.' }
     ] }
   ]
 };
